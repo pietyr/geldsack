@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -6,15 +8,14 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { urlIsActive } from '@/lib/utils';
+import { useActiveUrl } from '@/composables/useActiveUrl';
 import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
 
 defineProps<{
     items: NavItem[];
 }>();
 
-const page = usePage();
+const { urlIsActive } = useActiveUrl();
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const page = usePage();
             <SidebarMenuItem v-for="item in items" :key="item.title">
                 <SidebarMenuButton
                     as-child
-                    :is-active="urlIsActive(item.href, page.url)"
+                    :is-active="urlIsActive(item.href)"
                     :tooltip="item.title"
                 >
                     <Link :href="item.href">

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { Form } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { useTemplateRef } from 'vue';
 
-// Components
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -20,7 +19,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const passwordInput = ref<InstanceType<typeof Input> | null>(null);
+const passwordInput = useTemplateRef('passwordInput');
 </script>
 
 <template>

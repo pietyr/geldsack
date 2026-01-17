@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import PasswordController from '@/actions/App/Http/Controllers/Settings/PasswordController';
-import InputError from '@/components/InputError.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { edit } from '@/routes/user-password';
 import { Form, Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
+import PasswordController from '@/actions/App/Http/Controllers/Settings/PasswordController';
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import AppLayout from '@/layouts/AppLayout.vue';
+import SettingsLayout from '@/layouts/settings/Layout.vue';
+import { edit } from '@/routes/user-password';
 import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbItems: BreadcrumbItem[] = [
@@ -19,14 +18,13 @@ const breadcrumbItems: BreadcrumbItem[] = [
         href: edit().url,
     },
 ];
-
-const passwordInput = ref<HTMLInputElement | null>(null);
-const currentPasswordInput = ref<HTMLInputElement | null>(null);
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Password settings" />
+
+        <h1 class="sr-only">Password Settings</h1>
 
         <SettingsLayout>
             <div class="space-y-6">
@@ -53,7 +51,6 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                         <Label for="current_password">Current password</Label>
                         <Input
                             id="current_password"
-                            ref="currentPasswordInput"
                             name="current_password"
                             type="password"
                             class="mt-1 block w-full"
@@ -67,7 +64,6 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                         <Label for="password">New password</Label>
                         <Input
                             id="password"
-                            ref="passwordInput"
                             name="password"
                             type="password"
                             class="mt-1 block w-full"
