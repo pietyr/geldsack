@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { Github, LayoutGrid, Wallet } from 'lucide-vue-next';
 
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -12,12 +12,13 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
+    SidebarMenuItem
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 
 import AppLogo from './AppLogo.vue';
+import WalletController from '@/actions/App/Http/Controllers/WalletController';
 
 const mainNavItems: NavItem[] = [
     {
@@ -25,18 +26,18 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Wallets',
+        href: WalletController.index(),
+        icon: Wallet,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
     {
         title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
+        href: 'https://github.com/pietyr/geldsack',
+        icon: Github,
     },
 ];
 </script>
@@ -46,7 +47,7 @@ const footerNavItems: NavItem[] = [
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
+                    <SidebarMenuButton as-child size="lg">
                         <Link :href="dashboard()">
                             <AppLogo />
                         </Link>
