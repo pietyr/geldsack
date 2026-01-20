@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3';
-
-import AppLayout from '@/layouts/AppLayout.vue';
-import WalletController from '@/actions/App/Http/Controllers/WalletController';
-import { type BreadcrumbItem } from '@/types';
-import EmptyCard from '@/components/EmptyCard.vue';
 import { Wallet as WalletIcon } from 'lucide-vue-next';
+
+import WalletController from '@/actions/App/Http/Controllers/WalletController';
+import EmptyCard from '@/components/EmptyCard.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,19 +14,19 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-interface Wallet{
+interface Wallet {
     id: number;
     name: string;
-    balance: number
+    balance: number;
 }
 
 defineProps<{
-    wallets: Wallet[]
-}>()
+    wallets: Wallet[];
+}>();
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Create Wallet" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -38,11 +38,10 @@ defineProps<{
                     :link="WalletController.create()"
                     button="Create wallet"
                     description="Create a new wallet to get started"
-                 heading="No wallets yet"/>
+                    heading="No wallets yet"
+                />
             </template>
-            <template v-else>
-                Tabela
-            </template>
+            <template v-else> Tabela </template>
         </div>
     </AppLayout>
 </template>
