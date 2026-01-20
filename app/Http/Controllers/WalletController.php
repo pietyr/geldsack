@@ -1,19 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class WalletController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        return Inertia::render('Wallets/Index');
+        $wallets = auth()->user()->wallets()->select(['id', 'name', 'balance'])->latest()->get();
+        return Inertia::render('Wallets/Index', ['wallets' => $wallets]);
     }
 
     /**
