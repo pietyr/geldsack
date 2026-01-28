@@ -20,19 +20,32 @@ class WalletController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'starting_balance' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $wallet = $request->user()->wallets()->create([
+            'name' => $validated['name'],
+            'balance' => (float)($validated['starting_balance'] ?? 0),
+            'starting_balance' => (float)($validated['starting_balance'] ?? 0),
+        ]);
+
+        return redirect()
+            ->route('wallets.index')
+            ->with('success', 'Wallet created.');
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(): Response
     {
         return Inertia::render('Wallets/Create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -62,8 +75,14 @@ class WalletController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Wallet $wallet)
+    public function destroy(Request $request, Wallet $wallet)
     {
-        //
+        abort_unless($wallet->user_id === $request->user()->id, 403);
+
+        $wallet->delete();
+
+        return redirect()
+            ->route('wallets.index')
+            ->with('success', 'Wallet deleted.');
     }
 }

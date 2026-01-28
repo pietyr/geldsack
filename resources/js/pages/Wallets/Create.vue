@@ -32,7 +32,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <Form>
+            <Form :action="WalletController.store()" method="post">
                 <Card class="mx-auto w-full max-w-lg px-4">
                     <CardHeader
                         ><h4 class="text-2xl font-bold">

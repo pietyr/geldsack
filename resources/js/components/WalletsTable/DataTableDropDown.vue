@@ -1,4 +1,19 @@
 <script lang="ts" setup>
+import { router } from '@inertiajs/vue3';
+import { MoreHorizontal } from 'lucide-vue-next';
+import { ref } from 'vue';
+
+import WalletController from '@/actions/App/Http/Controllers/WalletController';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -8,13 +23,24 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-vue-next';
 
-defineProps<{
+const props = defineProps<{
     wallet: {
         id: string;
     };
 }>();
+
+const deleteOpen = ref(false);
+
+function requestDelete() {
+    deleteOpen.value = true;
+}
+
+function confirmDelete() {
+    router.delete(WalletController.destroy(Number(props.wallet.id)).url, {
+        preserveScroll: true,
+    });
+}
 </script>
 
 <template>
@@ -29,9 +55,26 @@ defineProps<{
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem @click="requestDelete">Delete</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
+    <AlertDialog v-model:open="deleteOpen">
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <AlertDialogTitle>Delete wallet?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    This action cannot be undone.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction @click="confirmDelete"
+                    >Delete</AlertDialogAction
+                >
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
 </template>
 
 <style scoped></style>
