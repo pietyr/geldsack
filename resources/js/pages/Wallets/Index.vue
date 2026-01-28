@@ -1,11 +1,14 @@
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { Wallet as WalletIcon } from 'lucide-vue-next';
 
 import WalletController from '@/actions/App/Http/Controllers/WalletController';
 import EmptyCard from '@/components/EmptyCard.vue';
+import { Button } from '@/components/ui/button';
+import WalletsTable from '@/components/WalletsTable/WalletsTable.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
+import Wallet from '@/types/Wallet';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,12 +16,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: WalletController.index().url,
     },
 ];
-
-interface Wallet {
-    id: number;
-    name: string;
-    balance: number;
-}
 
 defineProps<{
     wallets: Wallet[];
@@ -32,16 +29,25 @@ defineProps<{
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <template v-if="wallets.length === 0">
-                <EmptyCard
+            <template v-if="wallets.length === 0"
+                ><EmptyCard
                     :icon="WalletIcon"
                     :link="WalletController.create()"
                     button="Create wallet"
                     description="Create a new wallet to get started"
                     heading="No wallets yet"
-                />
+            /></template>
+            <template v-else>
+                <div class="flex flex-row justify-items-start gap-10">
+                    <WalletsTable
+                        :wallets="wallets"
+                        class="container w-fit"
+                    ></WalletsTable>
+                    <Link :href="WalletController.create()" class="">
+                        <Button>New wallet</Button>
+                    </Link>
+                </div>
             </template>
-            <template v-else> Tabela </template>
         </div>
     </AppLayout>
 </template>
