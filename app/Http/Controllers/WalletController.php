@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Wallet;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,7 +23,7 @@ class WalletController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
@@ -59,23 +60,37 @@ class WalletController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Wallet $wallet)
+    public function edit(Wallet $wallet): Response
     {
-        //
+        return Inertia::render('Wallets/Edit', ['wallet' => $wallet]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Wallet $wallet)
+    public function update(Request $request, Wallet $wallet): RedirectResponse
     {
-        //
+        abort_unless($wallet->user_id === $request->user()->id, 403);
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'starting_balance' => ['required', 'numeric'],
+        ]);
+
+        $wallet->update([
+            'name' => $validated['name'],
+            'starting_balance' => (float)$validated['starting_balance'],
+        ]);
+
+        return redirect()
+            ->route('wallets.index')
+            ->with('success', 'Wallet updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Wallet $wallet)
+    public function destroy(Request $request, Wallet $wallet): RedirectResponse
     {
         abort_unless($wallet->user_id === $request->user()->id, 403);
 

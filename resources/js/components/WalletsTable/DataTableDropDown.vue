@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { MoreHorizontal } from 'lucide-vue-next';
 import { ref } from 'vue';
 
@@ -54,7 +54,9 @@ function confirmDelete() {
         <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <Link :href="WalletController.edit(Number(props.wallet.id)).url">
+                <DropdownMenuItem>Edit</DropdownMenuItem></Link
+            >
             <DropdownMenuItem @click="requestDelete">Delete</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
