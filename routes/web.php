@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactionCategoryController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,5 +17,6 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('wallets', WalletController::class)->middleware(['auth', 'verified']);
+Route::resource('categories', TransactionCategoryController::class)->middleware(['auth', 'verified']);
 
 require __DIR__ . '/settings.php';

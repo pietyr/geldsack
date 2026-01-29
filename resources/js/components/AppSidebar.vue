@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Link } from '@inertiajs/vue3';
-import { Github, LayoutGrid, Wallet } from 'lucide-vue-next';
+import { Github, LayoutGrid, ListTree, Wallet } from 'lucide-vue-next';
 
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -19,6 +19,7 @@ import { type NavItem } from '@/types';
 
 import AppLogo from './AppLogo.vue';
 import WalletController from '@/actions/App/Http/Controllers/WalletController';
+import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
 
 const mainNavItems: NavItem[] = [
     {
@@ -31,6 +32,11 @@ const mainNavItems: NavItem[] = [
         href: WalletController.index(),
         icon: Wallet,
     },
+    {
+        title: 'Categories',
+        href: TransactionCategoryController.index(),
+        icon: ListTree,
+    }
 ];
 
 const footerNavItems: NavItem[] = [
