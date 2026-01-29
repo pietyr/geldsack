@@ -62,9 +62,16 @@ class TransactionCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TransactionCategory $category)
+    public function update(Request $request, TransactionCategory $category): RedirectResponse
     {
-        //
+        abort_unless($category->user_id === $request->user()->id, 403);
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'type' => ['required', 'string', 'in:income,expense'],
+        ]);
+        $category->update($validated);
+        return redirect()->route('categories.index')->with('success', 'Category updated.');
     }
 
     /**

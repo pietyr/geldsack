@@ -38,20 +38,10 @@ defineProps<{
                     heading="No wallets yet"
             /></template>
             <template v-else>
-                <div class="flex flex-row justify-center gap-10">
-                    <WalletsTable
-                        :wallets="wallets"
-                        class="container w-fit"
-                    ></WalletsTable>
-                    <div>
-                        <Link
-                            :href="WalletController.create()"
-                            class="cursor-pointer"
-                        >
-                            <Button>New wallet</Button></Link
-                        >
-                    </div>
-                </div>
+                <Link :href="WalletController.create()" class="cursor-pointer">
+                    <Button>New wallet</Button></Link
+                >
+                <WalletsTable :wallets="wallets"></WalletsTable>
             </template>
         </div>
     </AppLayout>

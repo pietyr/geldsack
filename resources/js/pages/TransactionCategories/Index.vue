@@ -38,17 +38,14 @@ defineProps<{
                     heading="No categories yet"
             /></template>
             <template v-else>
-                <div>
-                    <TransactionCategoriesTable :categories="categories" />
-                </div>
-                <div>
-                    <Link
-                        :href="TransactionCategoryController.create()"
-                        class="cursor-pointer"
-                    >
-                        <Button>New category</Button></Link
-                    >
-                </div>
+                <Link
+                    :href="TransactionCategoryController.create()"
+                    class="cursor-pointer"
+                >
+                    <Button>New category</Button></Link
+                >
+
+                <TransactionCategoriesTable :categories="categories" />
             </template>
         </div>
     </AppLayout>
