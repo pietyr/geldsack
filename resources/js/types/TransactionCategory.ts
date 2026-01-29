@@ -1,9 +1,7 @@
-export const TRANSACTION_CATEGORY_TYPES = ['income', 'expense'] as const;
+import { TransactionType } from '@/types/TransactionTypes';
 
 export default interface TransactionCategory {
     id: number;
     name: string;
-    type: TransactionCategoryType;
+    type: TransactionType;
 }
-
-export type TransactionCategoryType = (typeof TRANSACTION_CATEGORY_TYPES)[number];

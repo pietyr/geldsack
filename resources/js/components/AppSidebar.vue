@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { Link } from '@inertiajs/vue3';
-import { Github, LayoutGrid, ListTree, Wallet } from 'lucide-vue-next';
+import { Github, LayoutGrid, ListTree, Receipt, Wallet } from 'lucide-vue-next';
 
+import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
+import TransactionController from '@/actions/App/Http/Controllers/TransactionController';
+import WalletController from '@/actions/App/Http/Controllers/WalletController';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -12,14 +15,12 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem
+    SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 
 import AppLogo from './AppLogo.vue';
-import WalletController from '@/actions/App/Http/Controllers/WalletController';
-import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
 
 const mainNavItems: NavItem[] = [
     {
@@ -36,7 +37,12 @@ const mainNavItems: NavItem[] = [
         title: 'Categories',
         href: TransactionCategoryController.index(),
         icon: ListTree,
-    }
+    },
+    {
+        title: 'Transactions',
+        href: TransactionController.index(),
+        icon: Receipt,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

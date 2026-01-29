@@ -22,9 +22,8 @@ import {
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import TransactionCategory, {
-    TRANSACTION_CATEGORY_TYPES,
-} from '@/types/TransactionCategory';
+import { TRANSACTION_TYPES } from '@/types/TransactionTypes';
+import TransactionCategory from '@/types/TransactionCategory';
 
 const props = defineProps<{
     category: TransactionCategory;
@@ -100,7 +99,7 @@ const form = useForm({
                                         <SelectGroup>
                                             <SelectLabel>Types</SelectLabel>
                                             <SelectItem
-                                                v-for="type in TRANSACTION_CATEGORY_TYPES"
+                                                v-for="type in TRANSACTION_TYPES"
                                                 :key="type"
                                                 :value="type"
                                                 class="capitalize"

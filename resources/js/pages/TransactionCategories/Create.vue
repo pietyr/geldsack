@@ -3,7 +3,12 @@ import { Form, Head } from '@inertiajs/vue3';
 
 import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -13,11 +18,11 @@ import {
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue
+    SelectValue,
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { TRANSACTION_CATEGORY_TYPES } from '@/types/TransactionCategory';
+import { TRANSACTION_TYPES } from '@/types/TransactionTypes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -82,7 +87,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         <SelectGroup>
                                             <SelectLabel>Types</SelectLabel>
                                             <SelectItem
-                                                v-for="type in TRANSACTION_CATEGORY_TYPES"
+                                                v-for="type in TRANSACTION_TYPES"
                                                 :key="type"
                                                 :value="type"
                                                 class="capitalize"

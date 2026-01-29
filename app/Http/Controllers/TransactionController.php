@@ -4,14 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
+        $transactions = auth()->user()
+            ->transactions()
+            ->with([
+                'wallet:id,name',
+                'category:id,name',
+            ])
+            ->select([
+                'id',
+                'amount',
+                'wallet_id',
+                'transaction_category_id',
+                'description',
+                'date',
+                'type'
+            ])
+            ->latest()
+            ->get();
+
+        return Inertia::render('Transactions/Index', ['transactions' => $transactions]);
     }
 
     /**
