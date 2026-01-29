@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum TransactionCategoryType: string
+enum TransactionType: string
 {
     case EXPENSE = 'expense';
     case INCOME = 'income';

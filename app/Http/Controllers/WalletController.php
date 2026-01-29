@@ -62,6 +62,8 @@ class WalletController extends Controller
      */
     public function edit(Wallet $wallet): Response
     {
+        abort_unless($wallet->user_id === auth()->id(), 403);
+
         return Inertia::render('Wallets/Edit', ['wallet' => $wallet]);
     }
 

@@ -56,6 +56,8 @@ class TransactionCategoryController extends Controller
      */
     public function edit(TransactionCategory $category): Response
     {
+        abort_unless($category->user_id === auth()->id(), 403);
+
         return Inertia::render('TransactionCategories/Edit', ['category' => $category]);
     }
 
