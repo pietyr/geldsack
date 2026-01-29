@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasMany(Wallet::class);
     }
 
+    public function transactionCategories(): HasMany
+    {
+        return $this->hasMany(TransactionCategory::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
