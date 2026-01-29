@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/vue3';
 import { MoreHorizontal } from 'lucide-vue-next';
 import { ref } from 'vue';
 
-import WalletController from '@/actions/App/Http/Controllers/WalletController';
+import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const props = defineProps<{
-    wallet: {
+    category: {
         id: string | number;
     };
 }>();
@@ -37,9 +37,12 @@ function requestDelete() {
 }
 
 function confirmDelete() {
-    router.delete(WalletController.destroy(Number(props.wallet.id)).url, {
-        preserveScroll: true,
-    });
+    router.delete(
+        TransactionCategoryController.destroy(Number(props.category.id)).url,
+        {
+            preserveScroll: true,
+        },
+    );
 }
 </script>
 
@@ -54,7 +57,13 @@ function confirmDelete() {
         <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link :href="WalletController.edit(Number(props.wallet.id)).url">
+            <Link
+                :href="
+                    TransactionCategoryController.edit(
+                        Number(props.category.id),
+                    ).url
+                "
+            >
                 <DropdownMenuItem>Edit</DropdownMenuItem></Link
             >
             <DropdownMenuItem @click="requestDelete">Delete</DropdownMenuItem>

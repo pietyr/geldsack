@@ -4,6 +4,7 @@ import { ListTree as CategoryIcon } from 'lucide-vue-next';
 
 import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
 import EmptyCard from '@/components/EmptyCard.vue';
+import TransactionCategoriesTable from '@/components/TransactionCategoriesTable/TransactionCategoriesTable.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
@@ -37,6 +38,9 @@ defineProps<{
                     heading="No categories yet"
             /></template>
             <template v-else>
+                <div>
+                    <TransactionCategoriesTable :categories="categories" />
+                </div>
                 <div>
                     <Link
                         :href="TransactionCategoryController.create()"

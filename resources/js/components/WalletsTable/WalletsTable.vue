@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import DataTable from '@/components/DataTable.vue';
 import { columns } from '@/components/WalletsTable/columns';
-import DataTable from '@/components/WalletsTable/DataTable.vue';
 import Wallet from '@/types/Wallet';
 
 defineProps<{

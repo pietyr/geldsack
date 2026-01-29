@@ -46,7 +46,7 @@ class TransactionCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TransactionCategory $transactionCategory)
+    public function show(TransactionCategory $category)
     {
         //
     }
@@ -54,15 +54,15 @@ class TransactionCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TransactionCategory $transactionCategory)
+    public function edit(TransactionCategory $category): Response
     {
-        //
+        return Inertia::render('TransactionCategories/Edit', ['category' => $category]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TransactionCategory $transactionCategory)
+    public function update(Request $request, TransactionCategory $category)
     {
         //
     }
@@ -70,8 +70,12 @@ class TransactionCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TransactionCategory $transactionCategory)
+    public function destroy(Request $request, TransactionCategory $category): RedirectResponse
     {
-        //
+        abort_unless($category->user_id === $request->user()->id, 403);
+
+        $category->delete();
+        return redirect()->route('categories.index')->with('success', 'Category deleted.');
+
     }
 }
