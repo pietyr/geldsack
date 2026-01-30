@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->foreignId('wallet_id')->constrained()->cascadeOnDelete();
             $table->foreignId('transaction_category_id')->constrained()->cascadeOnDelete();
             $table->string('type');
-            $table->double('amount');
-            $table->string('description');
+            $table->double('amount')->default(0);
+            $table->string('description')->nullable();
             $table->dateTime('date');
             $table->timestamps();
         });
