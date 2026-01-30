@@ -40,7 +40,14 @@ class TransactionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Transactions/Create');
+        $categories = auth()->user()
+            ->transactionCategories()
+            ->select(['id', 'name', 'type'])
+            ->orderBy('name')
+            ->get();
+        $wallets = auth()->user()
+            ->wallets()->select(['id', 'name'])->get();
+        return Inertia::render('Transactions/Create', ['categories' => $categories, 'wallets' => $wallets]);
     }
 
     /**
@@ -48,7 +55,16 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'date' => ['required', 'date'],
+            'type' => ['required', 'in:income,expense'],
+            'category' => ['required', 'exists:transaction_categories,id'],
+            'amount' => ['required', 'numeric', 'min:0',],
+            'wallet' => ['required', 'exists:wallets,id'],
+            'description' => ['nullable', 'string'],
+        ]);
+        dd($validated);
+
     }
 
     /**

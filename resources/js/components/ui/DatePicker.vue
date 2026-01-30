@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Ref, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 
 const defaultPlaceholder = today(getLocalTimeZone())
 const date = ref() as Ref<DateValue>
@@ -15,14 +15,23 @@ const date = ref() as Ref<DateValue>
 const df = new DateFormatter('pl-PL', {
     dateStyle: 'long',
 })
+
+const props = defineProps<{
+    name: string;
+    modelValue?: DateValue;
+}>();
+
+const hiddenValue = computed(() => {
+    return date.value ? date.value.toString(): '';
+});
 </script>
 
 <template>
     <Popover v-slot="{ close }" class="w-full">
+        <input :name="props.name" :value="hiddenValue" type="hidden">
         <PopoverTrigger as-child>
             <Button
                 :class="cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')"
-                name="date"
                 variant="outline"
             >
                 <CalendarIcon />
