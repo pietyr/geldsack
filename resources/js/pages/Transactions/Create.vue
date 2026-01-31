@@ -4,7 +4,12 @@ import { computed, ref, watch } from 'vue';
 
 import TransactionController from '@/actions/App/Http/Controllers/TransactionController';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from '@/components/ui/card';
 import DatePicker from '@/components/ui/DatePicker.vue';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,7 +20,7 @@ import {
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue
+    SelectValue,
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';

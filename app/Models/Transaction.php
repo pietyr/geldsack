@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
-    protected $fillable = ['amount', 'category_id', 'wallet_id', 'transaction_category_id', 'user_id', 'date', 'type'];
+    protected $fillable = ['amount', 'wallet_id', 'transaction_category_id', 'user_id', 'date', 'type', 'description'];
 
     public function wallet(): BelongsTo
     {
