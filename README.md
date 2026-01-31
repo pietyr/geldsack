@@ -1,11 +1,16 @@
 # Geldsack
 
+## Live website
+
+### [geldsack.kisiel.io](https://geldsack.kisiel.io)
+
 ## How to build
 
 ### Prerequisites
 
-- PHP 8.3+
+- PHP 8.4+ (build on 8.5)
 - Composer
+- Node.js >= 22.12 (built on node 25)
 - npm
 - MySQL/MariaDB (not tested with SQLite)
 
