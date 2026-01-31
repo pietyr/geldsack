@@ -14,7 +14,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+
+    $wallets = auth()->user()->wallets()->select(['id', 'name', 'balance'])->latest()->get();
+    $categories = auth()->user()->transactionCategories()->select(['id', 'name', 'type'])->latest()->get();
+    $transactions = auth()->user()->transactions()->latest()->get();
+    return Inertia::render('Dashboard', compact('wallets', 'categories', 'transactions'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('wallets', WalletController::class)->middleware(['auth', 'verified']);
