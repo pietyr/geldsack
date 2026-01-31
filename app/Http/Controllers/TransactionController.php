@@ -31,7 +31,8 @@ class TransactionController extends Controller
                 'date',
                 'type'
             ])
-            ->latest()
+            ->orderByDesc('date')
+            ->orderByDesc('created_at')
             ->get();
 
         return Inertia::render('Transactions/Index', ['transactions' => $transactions]);
