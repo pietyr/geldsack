@@ -7,19 +7,31 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { computed, Ref, ref } from 'vue';
-
-const defaultPlaceholder = today(getLocalTimeZone())
-const date = ref() as Ref<DateValue>
-
-const df = new DateFormatter('pl-PL', {
-    dateStyle: 'long',
-})
+import { computed, Ref, ref, watch } from 'vue';
 
 const props = defineProps<{
     name: string;
     modelValue?: DateValue;
 }>();
+
+const defaultPlaceholder = today(getLocalTimeZone())
+const date = ref(props.modelValue) as Ref<DateValue | undefined>;
+
+watch(
+    () => props.modelValue,
+    (newValue) => {
+        if (newValue) {
+            date.value = newValue;
+        }
+    },
+);
+
+
+const df = new DateFormatter('pl-PL', {
+    dateStyle: 'long',
+})
+
+
 
 const hiddenValue = computed(() => {
     return date.value ? date.value.toString(): '';

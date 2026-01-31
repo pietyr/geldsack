@@ -4,6 +4,7 @@ import { Receipt } from 'lucide-vue-next';
 
 import TransactionController from '@/actions/App/Http/Controllers/TransactionController';
 import EmptyCard from '@/components/EmptyCard.vue';
+import TransactionsTable from '@/components/TransactionsTable/TransactionsTable.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
@@ -43,6 +44,9 @@ defineProps<{
                 >
                     <Button>New transaction</Button></Link
                 >
+                <TransactionsTable
+                    :transactions="transactions"
+                ></TransactionsTable>
             </template>
         </div>
     </AppLayout>

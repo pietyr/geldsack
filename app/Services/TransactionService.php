@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\TransactionType;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
@@ -39,9 +40,11 @@ final class TransactionService
         });
     }
 
-    private function signedDelta(string $type, float $amount): float
+    private function signedDelta(string|TransactionType $type, float $amount): float
     {
-        return $type === 'income' ? $amount : -$amount;
+        $typeValue = $type instanceof TransactionType ? $type->value : $type;
+
+        return $typeValue === 'income' ? $amount : -$amount;
     }
 
     public function update(User $user, Transaction $transaction, array $data): Transaction
@@ -55,7 +58,7 @@ final class TransactionService
             $newWalletId = (int)$data['wallet'];
 
             $walletIdsToLock = array_values(array_unique([$oldWalletId, $newWalletId]));
-            sort($walletIdsToLock); // stała kolejność = mniejsze ryzyko deadlock
+            sort($walletIdsToLock);
 
             $wallets = Wallet::query()
                 ->whereIn('id', $walletIdsToLock)
@@ -71,7 +74,7 @@ final class TransactionService
                 abort(404);
             }
 
-            $oldDelta = $this->signedDelta((string)$transaction->type, (float)$transaction->amount);
+            $oldDelta = $this->signedDelta($transaction->type, (float)$transaction->amount);
 
             $newAmount = (float)$data['amount'];
             $newDelta = $this->signedDelta($data['type'], $newAmount);
@@ -81,12 +84,10 @@ final class TransactionService
                     'balance' => (float)$oldWallet->balance + ($newDelta - $oldDelta),
                 ]);
             } else {
-                // Cofnij wpływ starej transakcji na stary wallet
                 $oldWallet->update([
                     'balance' => (float)$oldWallet->balance - $oldDelta,
                 ]);
 
-                // Dodaj wpływ nowej transakcji na nowy wallet
                 $newWallet->update([
                     'balance' => (float)$newWallet->balance + $newDelta,
                 ]);
@@ -118,9 +119,8 @@ final class TransactionService
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            $delta = $this->signedDelta((string)$transaction->type, (float)$transaction->amount);
+            $delta = $this->signedDelta($transaction->type, (float)$transaction->amount);
 
-            // cofamy wpływ transakcji na saldo
             $wallet->update([
                 'balance' => (float)$wallet->balance - $delta,
             ]);

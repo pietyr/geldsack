@@ -84,9 +84,32 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transaction $transaction)
+    public function edit(Transaction $transaction): Response
     {
-        //
+        abort_unless($transaction->user_id === auth()->id(), 403);
+
+        $transaction->load([
+            'wallet:id,name',
+            'category:id,name,type',
+        ]);
+
+        $categories = auth()->user()
+            ->transactionCategories()
+            ->select(['id', 'name', 'type'])
+            ->orderBy('name')
+            ->get();
+
+        $wallets = auth()->user()
+            ->wallets()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+
+        return Inertia::render('Transactions/Edit', [
+            'transaction' => $transaction,
+            'categories' => $categories,
+            'wallets' => $wallets,
+        ]);
     }
 
     /**
