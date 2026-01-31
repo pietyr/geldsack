@@ -3,11 +3,14 @@
 ## How to build
 
 ### Prerequisites
+
 - PHP 8.3+
 - Composer
 - npm
+- MySQL/MariaDB (not tested with SQLite)
 
 ### Steps
+
 1. Clone repo
 2. Copy `.env.example` to `.env` and adjust database settings
 3. Generate key `php artisan key:generate`
