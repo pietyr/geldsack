@@ -32,7 +32,11 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <Form :action="WalletController.store()" method="post">
+            <Form
+                :action="WalletController.store()"
+                method="post"
+                #default="{ errors }"
+            >
                 <Card class="mx-auto w-full max-w-lg px-4">
                     <CardHeader
                         ><h4 class="text-2xl font-bold">
@@ -49,6 +53,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     placeholder="Wallet name"
                                     type="text"
                                 />
+                                <div
+                                    v-if="errors.name"
+                                    class="font-medium text-red-600 italic"
+                                >
+                                    {{ errors.name }}
+                                </div>
                             </div>
                             <div class="flex flex-col space-y-1.5">
                                 <Label for="wallet-balance">Balance</Label>
@@ -58,6 +68,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     placeholder="Starting balance"
                                     type="number"
                                 />
+                                <div
+                                    v-if="errors.starting_balance"
+                                    class="font-medium text-red-600 italic"
+                                >
+                                    {{ errors.starting_balance }}
+                                </div>
                             </div>
                             <div class="flex flex-col space-y-1.5"></div>
                         </div>
