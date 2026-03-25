@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
 import { LogOut, Settings } from 'lucide-vue-next';
-
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -13,9 +12,9 @@ import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
 
-interface Props {
+type Props = {
     user: User;
-}
+};
 
 const handleLogout = () => {
     router.flushAll();

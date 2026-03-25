@@ -1,10 +1,7 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Github, LayoutGrid, ListTree, Receipt, Wallet } from 'lucide-vue-next';
-
-import TransactionCategoryController from '@/actions/App/Http/Controllers/TransactionCategoryController';
-import TransactionController from '@/actions/App/Http/Controllers/TransactionController';
-import WalletController from '@/actions/App/Http/Controllers/WalletController';
+import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -18,9 +15,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
-
-import AppLogo from './AppLogo.vue';
+import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
@@ -28,28 +23,18 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-    {
-        title: 'Wallets',
-        href: WalletController.index(),
-        icon: Wallet,
-    },
-    {
-        title: 'Categories',
-        href: TransactionCategoryController.index(),
-        icon: ListTree,
-    },
-    {
-        title: 'Transactions',
-        href: TransactionController.index(),
-        icon: Receipt,
-    },
 ];
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Github Repo',
-        href: 'https://github.com/pietyr/geldsack',
-        icon: Github,
+        title: 'Repository',
+        href: 'https://github.com/laravel/vue-starter-kit',
+        icon: FolderGit2,
+    },
+    {
+        title: 'Documentation',
+        href: 'https://laravel.com/docs/starter-kits#vue',
+        icon: BookOpen,
     },
 ];
 </script>
@@ -59,7 +44,7 @@ const footerNavItems: NavItem[] = [
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton as-child size="lg">
+                    <SidebarMenuButton size="lg" as-child>
                         <Link :href="dashboard()">
                             <AppLogo />
                         </Link>
