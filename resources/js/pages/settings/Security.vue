@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Form, Head } from '@inertiajs/vue3';
-import { ShieldCheck } from 'lucide-vue-next';
+import { ShieldCheck } from '@lucide/vue';
 import { onUnmounted, ref } from 'vue';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import Heading from '@/components/Heading.vue';
@@ -50,32 +50,32 @@ onUnmounted(() => clearTwoFactorAuthData());
 
     <div class="space-y-6">
         <Heading
-            variant="small"
-            title="Update password"
             description="Ensure your account is using a long, random password to stay secure"
+            title="Update password"
+            variant="small"
         />
 
         <Form
-            v-bind="SecurityController.update.form()"
+            v-slot="{ errors, processing, recentlySuccessful }"
             :options="{
                 preserveScroll: true,
             }"
-            reset-on-success
             :reset-on-error="[
                 'password',
                 'password_confirmation',
                 'current_password',
             ]"
             class="space-y-6"
-            v-slot="{ errors, processing, recentlySuccessful }"
+            reset-on-success
+            v-bind="SecurityController.update.form()"
         >
             <div class="grid gap-2">
                 <Label for="current_password">Current password</Label>
                 <PasswordInput
                     id="current_password"
-                    name="current_password"
-                    class="mt-1 block w-full"
                     autocomplete="current-password"
+                    class="mt-1 block w-full"
+                    name="current_password"
                     placeholder="Current password"
                 />
                 <InputError :message="errors.current_password" />
@@ -85,9 +85,9 @@ onUnmounted(() => clearTwoFactorAuthData());
                 <Label for="password">New password</Label>
                 <PasswordInput
                     id="password"
-                    name="password"
-                    class="mt-1 block w-full"
                     autocomplete="new-password"
+                    class="mt-1 block w-full"
+                    name="password"
                     placeholder="New password"
                 />
                 <InputError :message="errors.password" />
@@ -97,9 +97,9 @@ onUnmounted(() => clearTwoFactorAuthData());
                 <Label for="password_confirmation">Confirm password</Label>
                 <PasswordInput
                     id="password_confirmation"
-                    name="password_confirmation"
-                    class="mt-1 block w-full"
                     autocomplete="new-password"
+                    class="mt-1 block w-full"
+                    name="password_confirmation"
                     placeholder="Confirm password"
                 />
                 <InputError :message="errors.password_confirmation" />
@@ -132,9 +132,9 @@ onUnmounted(() => clearTwoFactorAuthData());
 
     <div v-if="canManageTwoFactor" class="space-y-6">
         <Heading
-            variant="small"
-            title="Two-factor authentication"
             description="Manage your two-factor authentication settings"
+            title="Two-factor authentication"
+            variant="small"
         />
 
         <div
@@ -153,11 +153,11 @@ onUnmounted(() => clearTwoFactorAuthData());
                 </Button>
                 <Form
                     v-else
+                    #default="{ processing }"
                     v-bind="enable.form()"
                     @success="showSetupModal = true"
-                    #default="{ processing }"
                 >
-                    <Button type="submit" :disabled="processing">
+                    <Button :disabled="processing" type="submit">
                         Enable 2FA
                     </Button>
                 </Form>
@@ -172,11 +172,11 @@ onUnmounted(() => clearTwoFactorAuthData());
             </p>
 
             <div class="relative inline">
-                <Form v-bind="disable.form()" #default="{ processing }">
+                <Form #default="{ processing }" v-bind="disable.form()">
                     <Button
-                        variant="destructive"
-                        type="submit"
                         :disabled="processing"
+                        type="submit"
+                        variant="destructive"
                     >
                         Disable 2FA
                     </Button>
