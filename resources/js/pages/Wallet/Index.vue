@@ -1,16 +1,9 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/vue3';
 import { Wallet as WalletIcon } from '@lucide/vue';
-import {
-    Empty,
-    EmptyContent,
-    EmptyDescription,
-    EmptyHeader,
-    EmptyMedia,
-    EmptyTitle,
-} from '@/components/ui/empty';
-import walletRoutes from '@/routes/wallets';
 import { Button } from '@/components/ui/button';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
+import walletRoutes from '@/routes/wallets';
 
 defineOptions({
     layout: {
@@ -52,7 +45,9 @@ const props = defineProps<{
                 <EmptyContent>
                     <div class="flex gap-2">
                         <Link :href="walletRoutes.create().url" as="button">
-                            <Button>Create Wallet</Button>
+                            <Button class="cursor-pointer"
+                                >Create Wallet</Button
+                            >
                         </Link>
                     </div>
                 </EmptyContent>
