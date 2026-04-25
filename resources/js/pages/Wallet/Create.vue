@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // defineProps<{}>()
 
-import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Form, Head } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -12,11 +12,6 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import walletRoutes, { store } from '@/routes/wallets';
-
-const form = useForm({
-    name: '',
-    balance: 0,
-});
 
 defineOptions({
     layout: {
