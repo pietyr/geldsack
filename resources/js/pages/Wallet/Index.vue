@@ -2,7 +2,16 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { Wallet as WalletIcon } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
+import { ButtonGroup } from '@/components/ui/button-group';
+import {
+    Empty,
+    EmptyContent,
+    EmptyDescription,
+    EmptyHeader,
+    EmptyMedia,
+    EmptyTitle,
+} from '@/components/ui/empty';
+import WalletsTable from '@/components/WalletsTable.vue';
 import walletRoutes from '@/routes/wallets';
 
 defineOptions({
@@ -16,19 +25,28 @@ defineOptions({
     },
 });
 
-const props = defineProps<{
-    wallets: Array<any>;
+defineProps<{
+    wallets: Array<{ id: number; name: string; starting_balance: number }>;
 }>();
 </script>
 
 <template>
     <Head title="Wallets" />
-
     <div
         class="flex h-full flex-1 flex-row items-center justify-center gap-4 overflow-x-auto rounded-xl p-4"
     >
-        <template v-if="props.wallets.length > 0">
-            <div>Zobacz portfele</div>
+        <template v-if="wallets.length > 0">
+            <div class="flex h-full w-full flex-col items-start gap-4">
+                <ButtonGroup
+                    ><ButtonGroup>
+                        <Link :href="walletRoutes.create().url">
+                            <Button variant="outline"> New wallet</Button>
+                        </Link>
+                    </ButtonGroup>
+                </ButtonGroup>
+
+                <WalletsTable :wallets="wallets"></WalletsTable>
+            </div>
         </template>
         <template v-else>
             <Empty class="grow-0 basis-auto">
@@ -44,7 +62,7 @@ const props = defineProps<{
                 </EmptyHeader>
                 <EmptyContent>
                     <div class="flex gap-2">
-                        <Link :href="walletRoutes.create().url" as="button">
+                        <Link :href="walletRoutes.create().url">
                             <Button class="cursor-pointer"
                                 >Create Wallet</Button
                             >

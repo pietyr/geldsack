@@ -18,7 +18,7 @@ class WalletController extends Controller
     public function index(): Response
     {
         $user = auth()->user();
-        $wallets = $user->wallets->all();
+        $wallets = $user->wallets()->select('id', 'name', 'starting_balance')->get();
         return Inertia::render('Wallet/Index', compact('wallets'));
     }
 
