@@ -9,8 +9,10 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
+import type { Wallet } from '@/types/models/wallet';
+
 defineProps<{
-    wallets: Array<{ id: number; name: string; starting_balance: number }>;
+    wallets: Wallet[];
 }>();
 </script>
 

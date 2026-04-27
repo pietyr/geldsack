@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/empty';
 import WalletsTable from '@/components/WalletsTable.vue';
 import walletRoutes from '@/routes/wallets';
+import type { Wallet } from '@/types/models/wallet';
 
 defineOptions({
     layout: {
@@ -26,7 +27,7 @@ defineOptions({
 });
 
 defineProps<{
-    wallets: Array<{ id: number; name: string; starting_balance: number }>;
+    wallets: Wallet[];
 }>();
 </script>
 
