@@ -16,6 +16,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::resource('wallets', WalletController::class);
-Route::resource('category', CategoryController::class);
+Route::resource('categories', CategoryController::class);
 
 require __DIR__ . '/settings.php';

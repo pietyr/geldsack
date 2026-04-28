@@ -1,18 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        $user = auth()->user();
+        $categories = $user->categories;
+        return Inertia::render('Category/Index', compact('categories'));
     }
 
     /**
