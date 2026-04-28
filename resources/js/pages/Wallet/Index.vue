@@ -3,14 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { Wallet as WalletIcon } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import {
-    Empty,
-    EmptyContent,
-    EmptyDescription,
-    EmptyHeader,
-    EmptyMedia,
-    EmptyTitle,
-} from '@/components/ui/empty';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import WalletsTable from '@/components/WalletsTable.vue';
 import walletRoutes from '@/routes/wallets';
 import type { Wallet } from '@/types/models/wallet';
@@ -41,7 +34,7 @@ defineProps<{
                 <ButtonGroup
                     ><ButtonGroup>
                         <Link :href="walletRoutes.create().url">
-                            <Button variant="outline"> New wallet</Button>
+                            <Button variant="default"> New wallet</Button>
                         </Link>
                     </ButtonGroup>
                 </ButtonGroup>
