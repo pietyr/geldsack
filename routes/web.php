@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -15,5 +16,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::resource('wallets', WalletController::class);
+Route::resource('category', CategoryController::class);
 
 require __DIR__ . '/settings.php';
