@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, ChartPie, FolderGit2, LayoutGrid, Wallet } from '@lucide/vue';
+import {
+    ArrowRightLeft,
+    BookOpen,
+    ChartPie,
+    FolderGit2,
+    LayoutGrid,
+    Wallet,
+} from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -12,10 +19,11 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem
+    SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import categories from '@/routes/categories';
+import transactions from '@/routes/transactions';
 import wallets from '@/routes/wallets';
 import type { NavItem } from '@/types';
 
@@ -34,6 +42,11 @@ const mainNavItems: NavItem[] = [
         title: 'Categories',
         href: categories.index(),
         icon: ChartPie,
+    },
+    {
+        title: 'Transactions',
+        href: transactions.index(),
+        icon: ArrowRightLeft,
     },
 ];
 
