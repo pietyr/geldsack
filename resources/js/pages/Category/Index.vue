@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/vue3';
 import { ChartPie } from '@lucide/vue';
+import { computed } from 'vue';
+import CategoriesTable from '@/components/CategoriesTable.vue';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import {
@@ -25,9 +27,16 @@ defineOptions({
     },
 });
 
-defineProps<{
+const props = defineProps<{
     categories: Category[];
 }>();
+
+const expenseCategories = computed(() => {
+    return props.categories.filter((category) => category.type === 'expense');
+});
+const incomeCategories = computed(() => {
+    return props.categories.filter((category) => category.type === 'income');
+});
 </script>
 
 <template>
@@ -44,6 +53,18 @@ defineProps<{
                         </Link>
                     </ButtonGroup>
                 </ButtonGroup>
+                <div class="w-full">
+                    <CategoriesTable
+                        :categories="expenseCategories"
+                        type="expense"
+                    ></CategoriesTable>
+                </div>
+                <div class="w-full">
+                    <CategoriesTable
+                        :categories="incomeCategories"
+                        type="income"
+                    ></CategoriesTable>
+                </div>
             </div>
         </template>
         <template v-else>
