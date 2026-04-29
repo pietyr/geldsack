@@ -32,8 +32,12 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $remember_token
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property-read Collection<int, Category> $categories
+ * @property-read int|null $categories_count
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
  * @property-read Collection<int, Wallet> $wallets
  * @property-read int|null $wallets_count
  * @method static UserFactory factory($count = null, $state = [])
@@ -51,8 +55,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static Builder<static>|User whereTwoFactorRecoveryCodes($value)
  * @method static Builder<static>|User whereTwoFactorSecret($value)
  * @method static Builder<static>|User whereUpdatedAt($value)
- * @property-read Collection<int, Category> $categories
- * @property-read int|null $categories_count
  * @mixin Eloquent
  */
 #[Fillable(['name', 'email', 'password'])]
@@ -70,6 +72,11 @@ class User extends Authenticatable
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     /**

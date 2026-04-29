@@ -8,8 +8,10 @@ use Carbon\CarbonImmutable;
 use Eloquent;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
@@ -19,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CategoryType $type
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property-read Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
  * @property-read User $user
  * @method static Builder<static>|Category newModelQuery()
  * @method static Builder<static>|Category newQuery()
@@ -31,15 +35,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|Category whereUserId($value)
  * @mixin Eloquent
  */
-#[Fillable(['name', 'user_id', 'type'])]
+#[Fillable(['name', 'type'])]
 class Category extends Model
 {
-    protected $casts = [
-        'type' => CategoryType::class,
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'type' => CategoryType::class,
+        ];
     }
 }
