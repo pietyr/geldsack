@@ -13,9 +13,8 @@ Route::inertia('/', 'Welcome', [
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::resource('wallets', WalletController::class);
+    Route::resource('categories', CategoryController::class);
 });
-
-Route::resource('wallets', WalletController::class);
-Route::resource('categories', CategoryController::class);
 
 require __DIR__ . '/settings.php';

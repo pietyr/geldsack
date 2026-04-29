@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/vue3';
+import { ChartPie } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import {
@@ -49,7 +50,7 @@ defineProps<{
             <Empty class="grow-0 basis-auto">
                 <EmptyHeader>
                     <EmptyMedia variant="icon">
-                        <CategoryIcon />
+                        <ChartPie />
                     </EmptyMedia>
                     <EmptyTitle>No categories yet!</EmptyTitle>
                     <EmptyDescription>

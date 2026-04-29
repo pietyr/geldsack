@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,19 +24,27 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      */
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $user = auth()->user();
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:255',
+            'type' => ['required', Rule::enum(CategoryType::class)]
+        ]);
+        $user->categories()->create($validated);
+        return redirect()->route('categories.index');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for creating a new resource.
      */
-    public function store(Request $request)
+    public function create(): Response
     {
-        //
+        return Inertia::render('Category/Create', [
+            'types' => CategoryType::casesArray()
+        ]);
     }
 
     /**
