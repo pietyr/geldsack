@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\TransactionType;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,9 +24,14 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request): Response
     {
-        //
+        $user = auth()->user();
+        $categories = $user->categories()->select('id', 'name', 'type')->get();
+        $transactionType = TransactionType::tryFrom($request->query('type', '')) ?? TransactionType::Expense;
+        $transactionType = $transactionType->value;
+        $wallets = $user->wallets()->select('id', 'name')->get();
+        return Inertia::render('Transaction/Create', compact('categories', 'transactionType', 'wallets'));
     }
 
     /**
@@ -32,7 +39,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
     }
 
     /**
