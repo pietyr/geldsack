@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
 use App\Models\Transaction;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,6 +24,23 @@ class TransactionController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'amount' => 'required|decimal:0,2',
+            'type' => ['required', Rule::enum(TransactionType::class)],
+            'date' => 'required|date',
+            'category_id' => ['required', Rule::exists('categories', 'id')->where('user_id', $user->id)],
+            'destination_wallet_id' => ['required', Rule::exists('wallets', 'id')->where('user_id', $user->id)],
+        ]);
+        $user->transactions()->create($validated);
+        return redirect()->route('transactions.index');
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request): Response
@@ -32,14 +51,6 @@ class TransactionController extends Controller
         $transactionType = $transactionType->value;
         $wallets = $user->wallets()->select('id', 'name')->get();
         return Inertia::render('Transaction/Create', compact('categories', 'transactionType', 'wallets'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $user = auth()->user();
     }
 
     /**
