@@ -1,14 +1,17 @@
 import type { TransactionType } from '@/types/enums';
+import type { Category } from '@/types/models/category';
+import type { Wallet } from '@/types/models/wallet';
 
 export interface Transaction {
     id: number;
     amount: string;
     type: TransactionType;
-    category_id?: number;
-    source_wallet_id?: number;
-    destination_wallet_id?: number;
     date: string;
+    category?: Category;
+    sourceWallet?: Wallet;
+    destinationWallet?: Wallet;
     description?: string;
     created_at?: string;
     updated_at?: string;
+    user_id?: number;
 }

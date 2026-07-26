@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/vue3';
 import { ArrowRightLeft as TransactionIcon } from '@lucide/vue';
+import TransactionsTable from '@/components/TransactionsTable.vue';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import {
     Empty,
     EmptyContent,
@@ -34,10 +36,18 @@ defineProps<{
     <div
         class="flex h-full flex-1 flex-row items-center justify-center gap-4 overflow-x-auto rounded-xl p-4"
     >
-        <template v-if="transactions.length">
+        <template v-if="transactions.length > 0">
             <div class="flex h-full w-full flex-col items-start gap-4">
-                <h4>TODO</h4>
-                <p>Wallets table</p>
+                <ButtonGroup
+                    ><ButtonGroup>
+                        <Link :href="transactionsRoutes.create().url">
+                            <Button variant="default"> New transaction</Button>
+                        </Link>
+                    </ButtonGroup>
+                </ButtonGroup>
+                <div class="w-full">
+                    <TransactionsTable :transactions="transactions" />
+                </div>
             </div>
         </template>
         <template v-else>

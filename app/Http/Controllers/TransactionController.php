@@ -19,7 +19,19 @@ class TransactionController extends Controller
     public function index(): Response
     {
         $user = auth()->user();
-        $transactions = $user->transactions;
+        $transactions = $user->transactions()
+            ->with('category:id,name,type', 'sourceWallet:id,name', 'destinationWallet:id,name')
+            ->latest('date')
+            ->get()
+            ->map(fn(Transaction $transaction) => [
+                'id' => $transaction->id,
+                'amount' => $transaction->amount,
+                'type' => $transaction->type,
+                'date' => $transaction->date,
+                'category' => $transaction->category,
+                'sourceWallet' => $transaction->sourceWallet,
+                'destinationWallet' => $transaction->destinationWallet,
+            ]);
         return Inertia::render('Transaction/Index', compact('transactions'));
     }
 
